@@ -2,11 +2,11 @@ FROM postgres:latest
 
 ADD db /var/lib/postgresql/data
 WORKDIR /var/lib/postgresql/data
+ENV PGDATA /var/lib/postgresql/data/db-files
 
 ENV LANG C.UTF-8
 ENV LC_ALL C.UTF-8
 ENV LC_CTYPE C.UTF-8
-
 ENV POSTGRES_HOST_AUTH_METHOD trust
 
 # your stuff here
