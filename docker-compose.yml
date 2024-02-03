@@ -1,0 +1,78 @@
+version: "2"
+
+services:
+  www.devbox:
+    build:
+      context: .
+      dockerfile: Dockerfile-www
+    shm_size: 1g
+    mem_limit: 1g
+    hostname: www.devbox
+    volumes:
+      - ./www:/var/www
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    ports:
+      - "127.0.0.1:18080:8080"
+      - "127.0.0.1:18443:8443"
+    stdin_open: true
+    tty: true
+
+  api.devbox:
+    build:
+      context: .
+      dockerfile: Dockerfile-api
+    shm_size: 1g
+    mem_limit: 256m
+    hostname: api.devbox
+    volumes:
+      - ./api:/var/www
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    environment:
+      - DISPLAY=${DISPLAY}
+    ports:
+      - "127.0.0.1:38080:8080"
+      - "127.0.0.1:38443:8443"
+    stdin_open: true
+    tty: true
+
+  memcached.devbox:
+    build:
+      context: .
+      dockerfile: Dockerfile-memcached
+    shm_size: 1g
+    mem_limit: 64m
+    hostname: memcached.devbox
+    ports:
+      - "127.0.0.1:48211:11211"
+    stdin_open: true
+    tty: true
+
+  db.devbox:
+    build:
+      context: .
+      dockerfile: Dockerfile-db
+    shm_size: 1g
+    mem_limit: 1g
+    hostname: db.devbox
+    volumes:
+      - ./db:/var/lib/postgresql/data
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    environment:
+      - DISPLAY=${DISPLAY}
+    stdin_open: true
+    tty: true
+
+  dbadmin.devbox:
+    build:
+      context: .
+      dockerfile: Dockerfile-dbadmin
+    shm_size: 1g
+    mem_limit: 64m
+    hostname: dbadmin.devbox
+    ports:
+      - "127.0.0.1:58081:80"
+    stdin_open: true
+    tty: true

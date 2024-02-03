@@ -1,0 +1,9 @@
+FROM memcached:alpine
+
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+ENV LC_CTYPE C.UTF-8
+
+# your stuff here
+
+#CMD ["memcached"]
